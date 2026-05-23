@@ -107,9 +107,14 @@ const vagas = [
     novaVaga5
 ];
 
-vagas.forEach(vaga => {
-    console.log(vaga.exibirResumo());
-});
+// Simulação - método utilizado: Promisse + async/await
+    function simuladorDeBuscador(){
+        return new Promise((resolve) => {
+            setTimeout(() =>{
+                resolve(vagas);
+            },2000);
+        });
+    }
 
 
 //FUNÇÕES:
@@ -184,12 +189,17 @@ vagas.forEach(vaga => {
         }
         const contador = contadorDeAnalise();
 
+    
+    // Finalização - métodos utilizados: Async/Await
 
-    // RELATÓRIOS
-    // =====================================================================================
-    // Relatório da avaliação de compatibilidade entre candidatos e vagas.
+        async function iniciarSistema(){
+            console.log("Carregando vagas ....");
 
-    vagas.forEach(vaga => {
+            const vagasCarregadas = 
+                await simuladorDeBuscador();
+            console.log("Vagas carregadas com sucesso!");
+
+            vagasCarregadas.forEach(vaga => {
 
         console.log(`
             
@@ -271,3 +281,6 @@ vagas.forEach(vaga => {
             *******************************************    
             `);
         });
+    }
+
+        iniciarSistema()
