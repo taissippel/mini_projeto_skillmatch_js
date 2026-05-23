@@ -3,6 +3,7 @@
 
 // DADOS DOS CANDIDATOS:
 // =======================================================================================
+// RF 01 Candidatos - métodos utilizados: object, arrays
 
 const candidato1 = {
     nome: "Lucia Oliveira",
@@ -36,6 +37,7 @@ const candidatos = [
 
 // CLASSE DE VAGAS DISPONÍVEIS:
 // =======================================================================================
+//Vagas - métodos utilizados: classe, object, constructor, this
 
 class Vaga {
     constructor(id, empresa, cargoDisponivel, requisitos, salario, modalidade) {
@@ -60,6 +62,7 @@ class Vaga {
     }
 }
 
+// Vagas: Herança(filha) - métodos utilizados: classe, constructor, super, this
 class VagaFrontEndJunior extends Vaga {
     constructor(id, empresa, cargoDisponivel, requisitos, salario, modalidade, experienciaMeses) {
         super(id, empresa, cargoDisponivel, requisitos, salario, modalidade);
@@ -79,6 +82,7 @@ class VagaFrontEndJunior extends Vaga {
         `;
     }
 
+    //Vaga - Verficar o requisito adicionado na vaga "filha"(Herança) - Método utilizado: if/else
     verificarExperiencia(candidato) {
         if (candidato.experienciaMeses >= this.experienciaMinima) {
             return "Candidato ATENDE ao requisito de experiência mínima.";
@@ -88,8 +92,9 @@ class VagaFrontEndJunior extends Vaga {
     }
 }
 
+// **** AS VAGAS ****
 const novaVaga1 = new Vaga(1, "Tech Solutions", "Desenvolvedor Front-End", ["JavaScript", "HTML", "CSS", "Lógica de Programação"], 3500, "Remoto");
-const novaVaga2 = new Vaga(2, "InovaTech", "Desenvolvedor Front-End", ["JavaScript", "React", "Lógica de Programação"], 4000, "Híbrido");
+const novaVaga2 = new Vaga(2, "InovaTech", "Desenvolvedor Front-End", ["JavaScript", "CSS", "React", "Lógica de Programação"], 4000, "Híbrido");
 const novaVaga3 = new Vaga(3, "CodeMasters", "Desenvolvedor Front-End", ["JavaScript", "GitHub", "Lógica de Programação"], 3800, "Presencial");
 const novaVaga4 = new Vaga(4, "WebGenius", "Desenvolvedor Front-End", ["JavaScript", "HTML", "CSS", "Lógica de Programação"], 3600, "Remoto");
 const novaVaga5 = new VagaFrontEndJunior(5, "StartUpX", "Desenvolvedor Front-End Júnior", ["JavaScript", "HTML", "CSS", "Lógica de Programação"], 3000, "Remoto", 3);
@@ -111,7 +116,7 @@ vagas.forEach(vaga => {
 // =====================================================================================    
 // Função para calcular a compatibilidade entre o candidato e a vaga.
 
-// Calcular compatibilidade
+// Calcular compatibilidade - métodos usados: includes, forEach, lenght, toFixed
     function calcularCompatibilidade(candidato, vaga){
         let habilidadesCompativeis = 0;
         vaga.requisitos.forEach(requisito => {
@@ -125,7 +130,7 @@ vagas.forEach(vaga => {
         return percentual.toFixed(0);
     }
 
-    // Classificação pela compatubilidade da vaga
+//Classificação gerada pela compatibilidade - métodos usados: if/else-if/else
     function classificacaoDaCompatibilidade(percentual){
         if(percentual >=80){
             return "Alta Compatibilidade";
@@ -136,7 +141,7 @@ vagas.forEach(vaga => {
         }
     }
     
-    // Habilidades faltantes
+//Habilidades faltantes - métodos usados: filter, includes
     function habilidadesFaltantes(candidato, vaga){
         const faltantes = vaga.requisitos.filter(requisito =>{
             return !candidato.habilidades.includes(requisito);
@@ -144,7 +149,7 @@ vagas.forEach(vaga => {
         return faltantes;
     }
     
-    //Indicação de estudo
+//Indicação de estudo - métodos usados: lenght, join
         function gerarIndicacao(faltantes){
             if(faltantes.length === 0){
                 return`
@@ -152,24 +157,38 @@ vagas.forEach(vaga => {
             }
 
                 return`
-                Faltamam ${faltantes.length} habilidade(s):
+                Faltaam ${faltantes.length} habilidade(s):
                 ${faltantes.join(" , ")}
-                Recomendamos se especializar mais nessas tecnologias e voltar a participar das seleções para as nossas vagas. Boa Sorte!`;
+                Recomendamos estudar mais essas tecnologias e voltar a participar das seleções para as nossas vagas. Boa Sorte!`;
         }
 
+
+    
+    // Finalização - métodos utilizados: Callback
         function finalizarAnalise(nome, callback){
             console.log("Análise finalizada.");
             callback(nome);
         }
 
         function mensagemFinal(nome){
-            console.log('${nome}, continue estudando e evolundo no mundo da tecnologia!');
-        }
+            console.log(`${nome}, continue se especializando e evoluindo no mundo da tecnologia!`) 
+       }
 
-    // RELATÓRIO
+    // Finalização - métodos utilizados: Closure
+        function contadorDeAnalise(){
+            let total = 0;
+            return function (){
+                total++;
+                return total;
+            };
+        }
+        const contador = contadorDeAnalise();
+
+
+    // RELATÓRIOS
     // =====================================================================================
     // Relatório da avaliação de compatibilidade entre candidatos e vagas.
-        
+
     vagas.forEach(vaga => {
 
         console.log(`
@@ -189,17 +208,18 @@ vagas.forEach(vaga => {
             habilidadesFaltantes(candidato, vaga);
         const indicacao =
             gerarIndicacao(faltantes); 
-
+        const numeroAnalise = contador();
+        
 
         console.log(`
             ===============================
+            Análise Nº: ${numeroAnalise}
+
             Candidato: ${candidato.nome}
             Compatibilidade: ${percentual}%
             Classificação: ${classificacao}
             Habilidades faltantes: ${faltantes.join(" , ")}
-            ${indicacao}
-            ===============================
-            `)
+            ${indicacao}`)
 
                 if(vaga instanceof VagaFrontEndJunior){
 
@@ -210,5 +230,44 @@ vagas.forEach(vaga => {
         console.log(`
             ...........................................
             `);
+            
+            finalizarAnalise(
+                candidato.nome, mensagemFinal
+            );
         })
     })
+
+            console.log(`
+            ####################################################
+            RELATÓRIO RESUMIDO DE COMPATIBILIDADES PARA CONTRATAÇÃO.
+            ####################################################
+        `)
+
+        vagas.forEach(vaga => {
+
+            console.log(`
+        VAGA: ${vaga.cargoDisponivel}
+        EMPRESA: ${vaga.empresa}
+                `);
+
+        let encontrouCandidato = false;
+            candidatos.forEach(candidato =>{
+                const percentual =
+                calcularCompatibilidade(candidato, vaga);
+                    if(percentual == 100){
+                        encontrouCandidato = true;
+            console.log(`
+                ✔ ${candidato.nome} pode ser contratado.
+                Atingiu a compatibilidade de ${percentual}%
+                `)
+                        }
+                });
+                    if(!encontrouCandidato){
+            console.log(`
+                😔 Nenhum candidato atingiu 100% de compatibilidade.
+                `);     
+                    }
+            console.log(`
+            *******************************************    
+            `);
+        });
