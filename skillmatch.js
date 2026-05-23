@@ -79,12 +79,11 @@ class VagaFrontEndJunior extends Vaga {
         `;
     }
 
-
     verificarExperiencia(candidato) {
         if (candidato.experienciaMeses >= this.experienciaMinima) {
-            return "Candidato atende ao requisito de experiência mínima.";
+            return "Candidato ATENDE ao requisito de experiência mínima.";
         } else {
-            return "Candidato não atende ao requisito de experiência mínima.";
+            return "Candidato NÃO atende ao requisito de experiência mínima.";
         }
     }
 }
@@ -112,7 +111,7 @@ vagas.forEach(vaga => {
 // =====================================================================================    
 // Função para calcular a compatibilidade entre o candidato e a vaga.
 
-
+// Calcular compatibilidade
     function calcularCompatibilidade(candidato, vaga){
         let habilidadesCompativeis = 0;
         vaga.requisitos.forEach(requisito => {
@@ -126,6 +125,7 @@ vagas.forEach(vaga => {
         return percentual.toFixed(0);
     }
 
+    // Classificação pela compatubilidade da vaga
     function classificacaoDaCompatibilidade(percentual){
         if(percentual >=80){
             return "Alta Compatibilidade";
@@ -136,7 +136,36 @@ vagas.forEach(vaga => {
         }
     }
     
+    // Habilidades faltantes
+    function habilidadesFaltantes(candidato, vaga){
+        const faltantes = vaga.requisitos.filter(requisito =>{
+            return !candidato.habilidades.includes(requisito);
+        });
+        return faltantes;
+    }
     
+    //Indicação de estudo
+        function gerarIndicacao(faltantes){
+            if(faltantes.length === 0){
+                return`
+                Você atendeu todos os requisitos para a vaga, parabéns!!!`;
+            }
+
+                return`
+                Faltamam ${faltantes.length} habilidade(s):
+                ${faltantes.join(" , ")}
+                Recomendamos se especializar mais nessas tecnologias e voltar a participar das seleções para as nossas vagas. Boa Sorte!`;
+        }
+
+        function finalizarAnalise(nome, callback){
+            console.log("Análise finalizada.");
+            callback(nome);
+        }
+
+        function mensagemFinal(nome){
+            console.log('${nome}, continue estudando e evolundo no mundo da tecnologia!');
+        }
+
     // RELATÓRIO
     // =====================================================================================
     // Relatório da avaliação de compatibilidade entre candidatos e vagas.
@@ -156,6 +185,10 @@ vagas.forEach(vaga => {
             calcularCompatibilidade(candidato, vaga);
         const classificacao = 
             classificacaoDaCompatibilidade(percentual);
+        const faltantes =
+            habilidadesFaltantes(candidato, vaga);
+        const indicacao =
+            gerarIndicacao(faltantes); 
 
 
         console.log(`
@@ -163,8 +196,11 @@ vagas.forEach(vaga => {
             Candidato: ${candidato.nome}
             Compatibilidade: ${percentual}%
             Classificação: ${classificacao}
+            Habilidades faltantes: ${faltantes.join(" , ")}
+            ${indicacao}
             ===============================
             `)
+
                 if(vaga instanceof VagaFrontEndJunior){
 
                     console.log(
