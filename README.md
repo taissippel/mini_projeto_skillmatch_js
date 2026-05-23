@@ -30,14 +30,13 @@ Analisar se os conceitos ensinados no Módulo 01 do curso de Desenvolver de Soft
 * No VS Code copiar/colar o código do GitHub, se tiver o "Code Runner" instalador, salvar e clicar "CTRL + ALT + N" (como foi feito os testes)
 
 ## ESTRUTURA DO PROJETO ##
-* SKILLMATCH
-** Candidatos
-** Vagas
-** Classe base de vagas
-** Classe Herança VagaFrontEndJunior
-** Função de compatibilidade
-** Relatórios
-** Simulação de carregamento de vagas
+* Candidatos
+* Vagas
+* Classe base de vagas
+* Classe Herança VagaFrontEndJunior
+* Função de compatibilidade
+* Relatórios
+* Simulação de carregamento de vagas
 
 ## ESTRUTURA DE DADOS ##
 * Object;
